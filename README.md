@@ -25,18 +25,14 @@ To run the app locally, follow these steps:
 2. Navigate to the project directory: cd quiz-app
 3. Install dependencies: npm install 
 4. Set up Supabase:
-
 - Create an account on Supabase and set up a new project.
 - Create tables for quizzes and leaderboard using the Supabase dashboard.
 - Copy your Supabase URL and API key.
-
 5. Set up environment variables:
-
-Create a `.env` file in the root directory and add the following:
-REACT_APP_SUPABASE_URL=your-supabase-url
-REACT_APP_SUPABASE_KEY=your-supabase-api-key
+- Create a `.env` file in the root directory and add the following:
+- REACT_APP_SUPABASE_URL=your-supabase-url
+- REACT_APP_SUPABASE_KEY=your-supabase-api-key
 6. Run the app:npm start
-
 7. Open your browser and navigate to `http://localhost:3000` to view the app.
 
 ## Contributing
