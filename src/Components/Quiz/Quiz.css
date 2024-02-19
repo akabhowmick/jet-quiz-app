@@ -1,0 +1,43 @@
+.quiz-game-board {
+  background-color: aliceblue;
+  color: black;
+  padding: 1rem;
+}
+
+#quiz-answers {
+  width: 50%;
+  margin: 1rem;
+}
+
+ul.answers-flexbox {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-wrap: wrap;
+}
+
+ul > input {
+  width: 25%;
+}
+
+.user-answered {
+  background: lightgreen;
+}
+
+.user-did-not-answer {
+  background: lightcoral;
+}
+
+.default-input {
+  background: lightgrey;
+}
+
+
+#quiz-box-btn{display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  flex: 1;}
