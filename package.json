@@ -1,5 +1,5 @@
 {
-  "name": "jetquiz",
+  "name": "jetquizapp",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -28,7 +28,7 @@
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/react": "^18.2.15",
-    "@types/react-dom": "^18.2.7",
+    "@types/react-dom": "^18.2.19",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "@vitejs/plugin-react": "^4.0.3",

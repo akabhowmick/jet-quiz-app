@@ -1,9 +1,13 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
+import * as React from "react";
+import * as ReactDOM from "react-dom/client";
+import App from "./App";
 import { AuthProvider } from "./providers/auth-provider";
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
+);
+
+root.render(
   <React.StrictMode>
     <AuthProvider>
       <App />
