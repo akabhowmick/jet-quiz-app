@@ -7,7 +7,7 @@ import {
   ReactNode,
   useCallback,
 } from "react";
-import { getQuizUsersInfoFromDB } from "../api/QuizUsersRequests/getQuizUserInfo";
+import { getQuizUsersInfoFromDB } from "../api/QuizUsersRequests/GetQuizUserInfo";
 import { updateQuizUserInfoInDB } from "../api/QuizUsersRequests/PatchQuizUserInfo";
 import { addUserToDB } from "../api/QuizUsersRequests/PostQuizUserInfo";
 import { QuizUsersInfo } from "../types/interfaces";
