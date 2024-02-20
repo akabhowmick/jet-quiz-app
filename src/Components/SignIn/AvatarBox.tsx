@@ -6,7 +6,7 @@ import Modal from "@mui/joy/Modal";
 import ModalClose from "@mui/joy/ModalClose";
 import ModalDialog from "@mui/joy/ModalDialog";
 import { SetStateAction, useState } from "react";
-import { avatars } from "./Avatars";
+import { avatars } from "../../Avatars";
 
 const AvatarBox = ({
   setSelectedAvatar,
@@ -38,7 +38,7 @@ const AvatarBox = ({
                 <img
                   className="animal-icon"
                   key={index}
-                  src={`url(${avatar})`}
+                  src={avatar}
                   alt={`Avatar ${index + 1}`}
                   onClick={() => handleAvatarClick(avatar)}
                 />
