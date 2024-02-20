@@ -1,24 +1,35 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-.env
-node_modules
-dist
-dist-ssr
-*.local
+# Ignore node_modules directory
+node_modules/
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# Ignore build output directory
+build/
+
+# Ignore development environment files
+.env
+
+# Ignore operating system files
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+Thumbs.db
+
+# Ignore editor configuration files
+.vscode/
+.idea/
+
+# Ignore log files
+*.log
+
+# Ignore compiled binary files
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Ignore package-lock.json for npm
+package-lock.json
+
+# Ignore yarn lock file
+yarn.lock
+
+# Ignore dependencies installed via pip
+pip-install-stamp.txt
+pip-wheel-metadata/
