@@ -2,6 +2,7 @@ import { Button } from "@mui/joy";
 import { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import { useAuthContext } from "../../providers/auth-provider";
 import { useQuizContext } from "../../providers/quiz-provider";
+import { useQuizUserInfoContext } from "../../providers/quiz-user-info-provider";
 import { Quiz } from "../../types/interfaces";
 import {
   emptyAnswerErrorMessage,
@@ -26,6 +27,7 @@ export const EnterQuizInfo = ({
 }) => {
   const { addQuiz, editQuiz } = useQuizContext();
   const { user } = useAuthContext();
+  const { quizUserInfo } = useQuizUserInfoContext();
 
   const [numOfAnswers, setNumOfAnswers] = useState(1); // Default number of answers
   const isNumOfAnswersValid = isValidPositiveInteger(numOfAnswers);
@@ -95,13 +97,14 @@ export const EnterQuizInfo = ({
       isNumOfAnswersValid &&
       isAnswerArrayInputValid
     ) {
-      // TODO fix the quizAuthorId => right now it is automatically given
       const quizMade: Quiz = {
         question: questionInput,
         numberOfAnswers: numOfAnswers,
         timeLimit: timeInput,
         answersArray: answersArrayInput,
         quizAuthorId: user!.id!,
+        quizAuthorName: quizUserInfo!.userName,
+        quizAuthorImage: quizUserInfo!.user_image,
       };
       return quizMade;
     }

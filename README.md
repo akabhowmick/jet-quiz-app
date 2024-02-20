@@ -45,6 +45,10 @@ Contributions are welcome! If you'd like to contribute to the project, please fo
 4. Push to the branch: `git push origin feature/my-feature`.
 5. Submit a pull request.
 
+## Future Updates:
+1. Responsive on Mobile Devices.
+2. Special Features for certain accomplishments. 
+
 
 
 

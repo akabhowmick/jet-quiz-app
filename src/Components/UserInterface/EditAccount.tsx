@@ -11,35 +11,30 @@ import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 import { useAuthContext } from "../../providers/auth-provider";
 import {
-  isEmailValid,
   isValidPassword,
 } from "../FormElements/FormUtils/validations";
 import { TextFieldWithValidation } from "../FormElements/FormUtils/TextFieldWithValidation";
 import {
-  emailErrorMessage,
   passwordErrorMessage,
 } from "../FormElements/FormUtils/ErrorMessage";
 
 export const EditAccount = () => {
   const { editUserLogin} = useAuthContext();
   const [open, setOpen] = React.useState<boolean>(false);
-  const [emailInput, setEmailInput] = React.useState("");
   const [passwordInput, setPasswordInput] = React.useState("");
-  const isEmailInputValid = isEmailValid(emailInput);
   const isPasswordInputValid = isValidPassword(passwordInput);
   const [isSubmitted, setIsSubmitted] = React.useState(false);
 
   const reset = () => {
-    setEmailInput("");
     setPasswordInput("");
     setIsSubmitted(false);
   };
   
   const handleEditBtnClick = () => {
     setIsSubmitted(true);
-    if (isEmailInputValid && isPasswordInputValid) {
+    if (isPasswordInputValid) {
       reset();
-      editUserLogin(emailInput, passwordInput);
+      editUserLogin(passwordInput);
     }
   };
 
@@ -64,22 +59,7 @@ export const EditAccount = () => {
           <DialogContent>
             Are you sure you want to edit your account?
             <TextFieldWithValidation
-              label="Create Account Email"
-              inputProps={{
-                placeholder: "ab@bing.net",
-                value: emailInput,
-                type: "text",
-                onChange: (e: {
-                  target: { value: React.SetStateAction<string> };
-                }) => {
-                  setEmailInput(e.target.value);
-                },
-              }}
-              errorMessage={emailErrorMessage}
-              shouldDisplayError={!isEmailInputValid && isSubmitted}
-            />
-            <TextFieldWithValidation
-              label="Create Account Password"
+              label="Edit Account Password"
               inputProps={{
                 placeholder: "Password1!",
                 value: passwordInput,

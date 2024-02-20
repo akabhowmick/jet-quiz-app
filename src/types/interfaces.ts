@@ -6,7 +6,8 @@ export interface QuizUsersInfo {
   numberOfQuizzesPlayed: number;
   overallQuizPoints: number;
   overallRanking: number;
-  user_id: string
+  user_id: string;
+  user_image: string;
 }
 
 export interface Quiz {
@@ -16,6 +17,8 @@ export interface Quiz {
   timeLimit: number;
   answersArray: string[];
   quizAuthorId: string;
+  quizAuthorName: string;
+  quizAuthorImage: string;
 }
 
 export interface UserSignIn {
@@ -27,4 +30,4 @@ export interface UserDataFromSupabase {
   user: User | null;
   session: Session | null;
   weakPassword?: WeakPassword | undefined;
-} 
+}

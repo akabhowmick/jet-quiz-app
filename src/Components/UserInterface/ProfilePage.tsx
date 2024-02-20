@@ -10,7 +10,11 @@ import { useQuizUserInfoContext } from "../../providers/quiz-user-info-provider"
 
 export const ProfilePage = () => {
   const { quizUserInfo } = useQuizUserInfoContext();
-  
+  const rankingInfo =
+    quizUserInfo?.overallRanking === 0
+      ? "Play more games to be ranked!"
+      : quizUserInfo?.overallRanking;
+
   return (
     <Box
       sx={{
@@ -62,12 +66,11 @@ export const ProfilePage = () => {
           resize: "horizontal",
         }}
       >
-        <AspectRatio flex ratio="1" maxHeight={182} sx={{ minWidth: 182 }}>
+        <AspectRatio flex objectFit="contain" sx={{ minWidth: 150 }}>
           <img
-            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
-            srcSet="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286&dpr=2 2x"
+            src={quizUserInfo?.user_image}
             loading="lazy"
-            alt=""
+            alt="user-avatar"
           />
         </AspectRatio>
         <CardContent>
@@ -93,19 +96,23 @@ export const ProfilePage = () => {
               <Typography level="body-xs" fontWeight="lg">
                 Number of Quizzes Played:
               </Typography>
-              <Typography fontWeight="lg">{quizUserInfo!.numberOfQuizzesPlayed}</Typography>
+              <Typography fontWeight="lg">
+                {quizUserInfo!.numberOfQuizzesPlayed}
+              </Typography>
             </div>
             <div>
               <Typography level="body-xs" fontWeight="lg">
                 Current Points:
               </Typography>
-              <Typography fontWeight="lg">{quizUserInfo!.overallQuizPoints}</Typography>
+              <Typography fontWeight="lg">
+                {quizUserInfo!.overallQuizPoints}
+              </Typography>
             </div>
             <div>
               <Typography level="body-xs" fontWeight="lg">
                 Overall Ranking:
               </Typography>
-              <Typography fontWeight="lg">{quizUserInfo!.overallRanking}</Typography>
+              <Typography fontWeight="lg">{rankingInfo}</Typography>
             </div>
           </Sheet>
           <Box sx={{ display: "flex", gap: 1.5, "& > button": { flex: 1 } }}>

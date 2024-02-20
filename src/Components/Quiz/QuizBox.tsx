@@ -35,7 +35,7 @@ export const QuizBox = ({ quiz }: { quiz: Quiz }) => {
       }}
     >
       <CardContent sx={{ alignItems: "center", textAlign: "center" }}>
-        <Avatar sx={{ "--Avatar-size": "4rem" }} />
+        <Avatar src={quiz?.quizAuthorImage} sx={{ "--Avatar-size": "4rem" }} />
         <Chip
           size="sm"
           variant="soft"
@@ -47,7 +47,7 @@ export const QuizBox = ({ quiz }: { quiz: Quiz }) => {
             borderColor: "background.surface",
           }}
         >
-          VERIFIED
+          {quiz?.quizAuthorName}: VERIFIED 
         </Chip>
         <Typography level="title-lg">🎊 {quiz.question} 🎊</Typography>
         <Typography level="title-sm" sx={{ maxWidth: "24ch" }}>

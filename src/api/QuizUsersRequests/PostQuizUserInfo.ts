@@ -8,6 +8,7 @@ export const addUserToDB = async (user: QuizUsersInfo) => {
     overallRanking,
     userName,
     user_id,
+    user_image,
   } = user;
   const { data, error } = await supabase
     .from("QuizUsersInfo")
@@ -18,6 +19,7 @@ export const addUserToDB = async (user: QuizUsersInfo) => {
         overallRanking,
         userName,
         user_id,
+        user_image,
       },
     ])
     .select();

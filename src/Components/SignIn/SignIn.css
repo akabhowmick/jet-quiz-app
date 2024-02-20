@@ -8,10 +8,18 @@
 }
 
 .form-container {
+  padding: 2rem 0;
   position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
   top: 0;
   height: 100%;
-  transition: all 0.6s ease-in-out;
+  width: 50%;
+  transform: translateX(0);
+  transition: transform 0.6s ease-in-out;
 }
 
 .sign-in-container {
@@ -124,22 +132,18 @@
   transform: translateX(20%);
 }
 
-.social-container {
-  margin: 20px 0;
-}
-
-.social {
-  border-radius: 50%;
-  display: inline-flex;
+.animal-icons-grid {
+  display: grid;
   justify-content: center;
   align-items: center;
-  margin: 0 5px;
-  height: 60px;
-  width: 60px;
-  font-size: 1rem;
+  gap: 10px;
+  grid-template-columns: auto auto auto auto auto;
 }
 
-.social:hover {
-  border-radius: 50%;
-  background-color: #ddd;
+.animal-icon {
+  width: 100px;
+  height: 100px;
+  margin: 5px;
+  border: 2px solid transparent;
+  cursor: pointer;
 }

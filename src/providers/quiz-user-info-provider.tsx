@@ -20,7 +20,7 @@ interface QuizUserInfoContextType {
   leaderBoardUsers: QuizUsersInfo[];
   addQuizUserInfo: (user: QuizUsersInfo) => Promise<void>;
   editQuizUserInfo: (score: number, setToZero?: number) => Promise<void>;
-  updateOverallRankings: (updatedUsers: QuizUsersInfo[]) => Promise<number>;
+  updateCurrentUserRank: (updatedUsers: QuizUsersInfo[]) => Promise<number>;
   homePageDisplayOptions: string[];
   leaderBoardUsersLoadingError: boolean;
   leaderBoardUsersLoading: boolean;
@@ -78,7 +78,7 @@ export const QuizUserInfoProvider = ({
     const allUsers = await getQuizUsersInfoFromDB();
     if (allUsers && user) {
       const myCurrentUser = allUsers?.find((u) => u.user_id === user?.id);
-      setQuizUserInfo(myCurrentUser);
+      setQuizUserInfo(myCurrentUser as QuizUsersInfo);
     }
   }, [user]);
 
@@ -102,29 +102,34 @@ export const QuizUserInfoProvider = ({
   };
 
   const editQuizUserInfo = async (score: number, setToZero?: number) => {
-    let editedUser: QuizUsersInfo;
+    let newNumberOfQuizzesPlayed: number;
+    let newOverallPoints: number;
+    let newOverallRanking: number;
     if (setToZero === 0) {
-      editedUser = {
-        ...quizUserInfo!,
-        numberOfQuizzesPlayed: 0,
-        overallQuizPoints: 0,
-      };
+      newNumberOfQuizzesPlayed = 0;
+      newOverallPoints = 0;
+      newOverallRanking = 0;
     } else {
-      editedUser = {
-        ...quizUserInfo!,
-        numberOfQuizzesPlayed: quizUserInfo!.numberOfQuizzesPlayed + 1,
-        overallQuizPoints: quizUserInfo!.overallQuizPoints + score,
-      };
+      newNumberOfQuizzesPlayed = quizUserInfo!.numberOfQuizzesPlayed + 1;
+      newOverallPoints = quizUserInfo!.overallQuizPoints + score;
+      newOverallRanking = await updateCurrentUserRank();
     }
+    const editedUser: QuizUsersInfo = {
+      ...quizUserInfo!,
+      numberOfQuizzesPlayed: newNumberOfQuizzesPlayed,
+      overallQuizPoints: newOverallPoints,
+      overallRanking: newOverallRanking,
+    };
+    setQuizUserInfo(editedUser);
     const editedUserData = await updateQuizUserInfoInDB(editedUser);
     if (editedUserData) {
-      updateOverallRankings();
       setQuizUserInfo(editedUserData[0]);
     }
   };
 
-  const updateOverallRankings = async () => {
-    let overallRanking = 0;
+  const updateCurrentUserRank = async () => {
+    let newRank = 1;
+    const currentUserPoints = quizUserInfo!.overallQuizPoints;
     try {
       const allUsers = await getQuizUsersInfoFromDB();
       if (allUsers) {
@@ -134,15 +139,18 @@ export const QuizUserInfoProvider = ({
         );
         const limitedUsers = sortedUsers.slice(0, 10);
         for (let i = 1; i < limitedUsers.length; i++) {
-          if (limitedUsers[i] === quizUserInfo) {
-            overallRanking = i + 1;
+          if (
+            currentUserPoints < limitedUsers[i].overallQuizPoints &&
+            currentUserPoints !== limitedUsers[i]
+          ) {
+            newRank = i + 1;
           }
         }
       }
     } catch (error) {
       console.log(error);
     }
-    return overallRanking
+    return newRank;
   };
 
   return (
@@ -158,7 +166,7 @@ export const QuizUserInfoProvider = ({
         homePageDisplayOptions,
         leaderBoardUsersLoadingError,
         leaderBoardUsersLoading,
-        updateOverallRankings,
+        updateCurrentUserRank,
       }}
     >
       {children}
@@ -168,3 +176,7 @@ export const QuizUserInfoProvider = ({
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const useQuizUserInfoContext = () => useContext(QuizUserInfoContext);
+
+// second we calculate the rank
+// third we set the currentUser to that new version we made
+// last we sett the currentUser to the fetch user info

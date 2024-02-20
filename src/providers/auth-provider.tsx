@@ -21,7 +21,7 @@ interface AuthContextType {
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
   signUpUser: (user: UserSignIn) => Promise<string | undefined>;
   signInUser: (user: UserSignIn) => Promise<boolean>;
-  editUserLogin: (email: string, password: string) => Promise<void>;
+  editUserLogin: (password: string) => Promise<void>;
   logOutUser: () => Promise<void>;
 }
 
@@ -44,6 +44,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       data: { user },
     } = await supabase.auth.getUser();
     setUser(user);
+    setLoggedIn(true);
   };
 
   const logOutUser = async () => {
@@ -88,8 +89,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const editUserLogin = async (email: string, password: string) => {
-    const { data, error } = await updateUserSupabase(email, password);
+  const editUserLogin = async (password: string) => {
+    const { data, error } = await updateUserSupabase(password);
     if (data.user) {
       setLocalStorage(data.user);
     }

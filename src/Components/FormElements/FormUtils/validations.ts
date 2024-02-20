@@ -27,3 +27,7 @@ export const isValidUserName = (userName: string) => {
   const passwordRegex = /^(?=.*\d).{7,}$/;
   return passwordRegex.test(userName);
 };
+
+export const isValidAvatar = (pathToImage: string) => {
+  return pathToImage.length > 0 && pathToImage; 
+}

@@ -1,23 +1,24 @@
 import { SetStateAction, useEffect, useState } from "react";
 import "./SignIn.css";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import TwitterIcon from "@mui/icons-material/Twitter";
 import { useAuthContext } from "../../providers/auth-provider";
 import { QuizUsersInfo, UserSignIn } from "../../types/interfaces";
 import {
   isEmailValid,
   isValidPassword,
   isValidUserName,
+  isValidAvatar,
 } from "../FormElements/FormUtils/validations";
 import {
   emailErrorMessage,
   passwordErrorMessage,
   usernameErrorMessage,
+  avatarIconErrorMessage,
+  ErrorMessage,
 } from "../FormElements/FormUtils/ErrorMessage";
 import { TextFieldWithValidation } from "../FormElements/FormUtils/TextFieldWithValidation";
 import { useNavigate } from "react-router-dom";
 import { useQuizUserInfoContext } from "../../providers/quiz-user-info-provider";
+import AvatarBox from "./AvatarBox";
 
 export const SignIn = () => {
   const { signUpUser, signInUser } = useAuthContext();
@@ -27,16 +28,18 @@ export const SignIn = () => {
   const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
   const [userNameInput, setUserNameInput] = useState("");
+  const [selectedAvatar, setSelectedAvatar] = useState("");
   const isEmailInputValid = isEmailValid(emailInput);
   const isPasswordInputValid = isValidPassword(passwordInput);
   const isUsernameInputValid = isValidUserName(userNameInput);
+  const isAvatarIconValid = isValidAvatar(selectedAvatar);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     if (localStorage.getItem("user")) {
-      // ? we need to make the user's saved info appear 
+      // ? we need to make the user's saved info appear
       navigate("/");
     }
   }, [navigate]);
@@ -70,7 +73,7 @@ export const SignIn = () => {
         password: passwordInput,
       };
       if (typeOfSignIn === "signup") {
-        if (isUsernameInputValid) {
+        if (isUsernameInputValid && isAvatarIconValid) {
           const newUserId = await signUpUser(inputtedCredentials);
           if (newUserId) {
             userSignedIn = true;
@@ -81,8 +84,8 @@ export const SignIn = () => {
             overallRanking: 0,
             userName: userNameInput,
             user_id: newUserId!,
+            user_image: selectedAvatar,
           };
-          // ! the authenticated user is not making the new User
           addQuizUserInfo(newUser);
         }
       } else if (typeOfSignIn === "login") {
@@ -100,12 +103,6 @@ export const SignIn = () => {
         <div className={typeOfSignIn + " form-container sign-up-container"}>
           <form action="#">
             <h1>Create Account</h1>
-            <div className="social-container">
-              <FacebookIcon className="social" />
-              <InstagramIcon className="social" />
-              <TwitterIcon className="social" />
-            </div>
-            <span>or use your email for registration</span>
             <TextFieldWithValidation
               label="Create Account Email"
               inputProps={{
@@ -151,18 +148,27 @@ export const SignIn = () => {
               errorMessage={usernameErrorMessage}
               shouldDisplayError={!isUsernameInputValid && isSubmitted}
             />
+            <div className="sign-up-avatar-container">
+              <AvatarBox setSelectedAvatar={setSelectedAvatar} />
+              {selectedAvatar && (
+                <img
+                  className="animal-icon"
+                  src={selectedAvatar}
+                  alt={`Avatar ${selectedAvatar}`}
+                />
+              )}
+              <ErrorMessage
+                message={avatarIconErrorMessage}
+                show={!isAvatarIconValid && isSubmitted}
+              />
+            </div>
+
             <button onClick={(e) => handleSignInSubmit(e)}>Sign Up</button>
           </form>
         </div>
         <div className={typeOfSignIn + " form-container sign-in-container"}>
           <form action="#">
             <h1>Sign in</h1>
-            <div className="social-container">
-              <FacebookIcon className="social" />
-              <InstagramIcon className="social" />
-              <TwitterIcon className="social" />
-            </div>
-            <span>or use your account</span>
             <TextFieldWithValidation
               label="Log In Email"
               inputProps={{
