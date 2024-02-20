@@ -6,6 +6,7 @@ import Modal from "@mui/joy/Modal";
 import ModalClose from "@mui/joy/ModalClose";
 import ModalDialog from "@mui/joy/ModalDialog";
 import { SetStateAction, useState } from "react";
+import { avatars } from "./Avatars";
 
 const AvatarBox = ({
   setSelectedAvatar,
@@ -13,34 +14,6 @@ const AvatarBox = ({
   setSelectedAvatar: React.Dispatch<SetStateAction<string>>;
 }) => {
   const [open, setOpen] = useState<boolean>(false);
-
-  const avatars = [
-    "src/assets/bear.png",
-    "src/assets/cat.png",
-    "src/assets/chicken.png",
-    "src/assets/dog.png",
-    "src/assets/elephant.png",
-    "src/assets/fox.png",
-    "src/assets/giraffe.png",
-    "src/assets/gorilla.png",
-    "src/assets/hen.png",
-    "src/assets/koala.png",
-    "src/assets/lion.png",
-    "src/assets/llama.png",
-    "src/assets/monkey.png",
-    "src/assets/octopus.png",
-    "src/assets/owl.png",
-    "src/assets/panda.png",
-    "src/assets/penguin.png",
-    "src/assets/polar-bear.png",
-    "src/assets/puffer-fish.png",
-    "src/assets/rabbit.png",
-    "src/assets/sea-lion.png",
-    "src/assets/shark.png",
-    "src/assets/tiger.png",
-    "src/assets/walrus.png",
-    "src/assets/weasel.png",
-  ];
 
   const handleAvatarClick = (avatar: string) => {
     setSelectedAvatar(avatar);
