@@ -8,7 +8,7 @@ This is a quiz application built using React with TypeScript for the frontend an
 
 - **Quiz Taking**: Users can select from a variety of quizzes on different topics and test their knowledge.
 - **Score Tracking**: The app keeps track of users' scores and displays them at the end of each quiz.
-- **Leaderboards**: Users can see how their scores compare to others on the leaderboard.
+- **Leader Board**: Users can see how their scores compare to others on the leaderboard.
 - **Responsive Design**: The app is designed to be responsive and work well on both desktop and mobile devices.
 
 ## Technologies Used
@@ -48,6 +48,8 @@ Contributions are welcome! If you'd like to contribute to the project, please fo
 ## Future Updates:
 1. Responsive on Mobile Devices.
 2. Special Features for certain accomplishments. 
+3. Filter functions by tags
+4. Search function by name of quiz
 
 
 

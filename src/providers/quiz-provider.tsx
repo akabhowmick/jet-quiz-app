@@ -17,14 +17,16 @@ import { Quiz } from "../types/interfaces";
 import swal from "sweetalert";
 
 interface QuizContextType {
-  quizzes: Quiz[];
+  playableQuizzes: Quiz[];
+  myQuizzes: Quiz[];
   currentQuiz: Quiz | undefined;
   addQuiz: (newQuiz: Quiz) => Promise<void>;
   editQuiz: (quizId: number, quizToEdit: Quiz) => Promise<boolean>;
   deleteQuiz: (quizId: number, quizToDelete: Quiz) => Promise<void>;
   getSingleQuizInfo: (quizId: number) => void;
   gameEndPointCalculator: (userPoints: number) => number;
-  setQuizzes: React.Dispatch<React.SetStateAction<Quiz[]>>;
+  setPlayableQuizzes: React.Dispatch<React.SetStateAction<Quiz[]>>;
+  setMyQuizzes: React.Dispatch<React.SetStateAction<Quiz[]>>;
   quizzesLoading: boolean;
   quizzesLoadingError: boolean;
 }
@@ -38,7 +40,8 @@ export const QuizProvider = ({
   user: User | null;
   children: ReactNode;
 }) => {
-  const [quizzes, setQuizzes] = useState<Quiz[]>([]);
+  const [playableQuizzes, setPlayableQuizzes] = useState<Quiz[]>([]);
+  const [myQuizzes, setMyQuizzes] = useState<Quiz[]>([]);
   const [quizzesLoading, setQuizzesLoading] = useState(true);
   const [quizzesLoadingError, setQuizzesLoadingError] = useState(false);
   const [currentQuiz, setCurrentQuiz] = useState<Quiz>();
@@ -57,7 +60,10 @@ export const QuizProvider = ({
       setQuizzesLoadingError(true);
     }
     if (data) {
-      setQuizzes(data);
+      setPlayableQuizzes(
+        data.filter((quiz: Quiz) => quiz.quizAuthorId !== user?.id)
+      );
+      setMyQuizzes(data.filter((quiz: Quiz) => quiz.quizAuthorId === user?.id));
     }
     setQuizzesLoading(false);
   };
@@ -90,7 +96,11 @@ export const QuizProvider = ({
       }
       return false;
     }
-    swal("Editing Error!", "Invalid: You are not the maker of this quiz!!", "error");
+    swal(
+      "Editing Error!",
+      "Invalid: You are not the maker of this quiz!!",
+      "error"
+    );
     return false;
   };
 
@@ -114,22 +124,28 @@ export const QuizProvider = ({
         );
       }
     }
-    swal("Delete Error!", "Invalid: You are not the maker of this quiz!!", "error");
+    swal(
+      "Delete Error!",
+      "Invalid: You are not the maker of this quiz!!",
+      "error"
+    );
   };
 
   return (
     <QuizContext.Provider
       value={{
+        myQuizzes,
         addQuiz,
-        quizzes,
+        playableQuizzes,
         editQuiz,
         getSingleQuizInfo,
         currentQuiz,
         gameEndPointCalculator,
         deleteQuiz,
-        setQuizzes,
+        setPlayableQuizzes,
         quizzesLoading,
         quizzesLoadingError,
+        setMyQuizzes,
       }}
     >
       {children}

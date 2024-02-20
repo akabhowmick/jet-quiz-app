@@ -44,10 +44,11 @@ export const QuizUserInfoProvider = ({
   const [leaderBoardUsersLoadingError, setLeaderBoardUsersLoadingError] =
     useState(false);
   const homePageDisplayOptions = [
-    "Show all quizzes",
-    "Add a new quiz",
+    "Show Playable Quizzes",
+    "Add A New Quiz",
     "See Leader Board",
     "User Instructions",
+    "Show My Quizzes",
   ];
 
   const fetchLeaderBoardData = async () => {

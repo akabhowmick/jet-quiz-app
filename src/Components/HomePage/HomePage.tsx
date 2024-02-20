@@ -8,15 +8,26 @@ import { useQuizUserInfoContext } from "../../providers/quiz-user-info-provider"
 import { UserInstructions } from "../UserInstructions/UserInstructions";
 
 export const HomePage = () => {
-  const { quizzes, quizzesLoading, quizzesLoadingError } = useQuizContext();
+  const { playableQuizzes, myQuizzes, quizzesLoading, quizzesLoadingError } = useQuizContext();
   const { selectedIndex } = useQuizUserInfoContext();
 
-  const allQuizzes = (
+  const showPlayableQuizzes = (
     <div className="quiz-box">
       {quizzesLoading && <div>Loading With Spin</div>}
       {quizzesLoadingError && <div>Error</div>}
-      {quizzes &&
-        quizzes.map((quiz) => {
+      {playableQuizzes &&
+        playableQuizzes.map((quiz) => {
+          return <QuizBox quiz={quiz} key={quiz.id} />;
+        })}
+    </div>
+  );
+
+  const showMyQuizzes = (
+    <div className="quiz-box">
+      {quizzesLoading && <div>Loading With Spin</div>}
+      {quizzesLoadingError && <div>Error</div>}
+      {myQuizzes &&
+        myQuizzes.map((quiz) => {
           return <QuizBox quiz={quiz} key={quiz.id} />;
         })}
     </div>
@@ -36,10 +47,11 @@ export const HomePage = () => {
       <div className="home-page-options">
         <HomePageOptions />
       </div>
-      {selectedIndex === 0 && allQuizzes}
+      {selectedIndex === 0 && showPlayableQuizzes}
       {selectedIndex === 1 && newQuiz}
       {selectedIndex === 2 && <Leaderboard />}
       {selectedIndex === 3 && <UserInstructions />}
+      {selectedIndex === 4 && showMyQuizzes}
     </div>
   );
 };
