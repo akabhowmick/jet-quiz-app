@@ -38,7 +38,7 @@ const AvatarBox = ({
                 <img
                   className="animal-icon"
                   key={index}
-                  src={avatar}
+                  src={`url(${avatar})`}
                   alt={`Avatar ${index + 1}`}
                   onClick={() => handleAvatarClick(avatar)}
                 />
