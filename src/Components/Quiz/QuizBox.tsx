@@ -22,6 +22,29 @@ export const QuizBox = ({ quiz }: { quiz: Quiz }) => {
   const canModify = user?.id === quiz.quizAuthorId;
   // if the id of the user is the same as the quiz, then they can edit and delete it but not play it
 
+  const buttonDisplays = (
+    <>
+      <ButtonGroup variant="outlined">
+        {!canModify && (
+          <Button
+            onClick={() => navigate(`/play/${quiz.id!}`)}
+            variant="solid"
+            color="success"
+            aria-label={`Play ${quiz.question}`}
+          >
+            Play Now!
+          </Button>
+        )}
+      </ButtonGroup>
+      {canModify && (
+        <ButtonGroup variant="outlined">
+          <EditQuiz canModify={canModify} quizToEdit={quiz} />
+          <DeleteQuiz canModify={canModify} quizToDelete={quiz} />
+        </ButtonGroup>
+      )}
+    </>
+  );
+
   return (
     <Card
       data-resizable
@@ -35,7 +58,11 @@ export const QuizBox = ({ quiz }: { quiz: Quiz }) => {
       }}
     >
       <CardContent sx={{ alignItems: "center", textAlign: "center" }}>
-        <Avatar src={quiz?.quizAuthorImage} sx={{ "--Avatar-size": "4rem" }} />
+        <Avatar
+          className="quiz-avatar-icon"
+          src={quiz?.quizAuthorImage}
+          sx={{ "--Avatar-size": "4rem" }}
+        />
         <Chip
           size="sm"
           variant="soft"
@@ -47,9 +74,12 @@ export const QuizBox = ({ quiz }: { quiz: Quiz }) => {
             borderColor: "background.surface",
           }}
         >
-          {quiz?.quizAuthorName}: VERIFIED 
+          {quiz?.quizAuthorName}: VERIFIED
         </Chip>
         <Typography level="title-lg">🎊 {quiz.question} 🎊</Typography>
+        <Typography level="title-sm">
+          Categories: {quiz.quizTags?.toString()}{" "}
+        </Typography>
         <Typography level="title-sm" sx={{ maxWidth: "24ch" }}>
           Time Limit: {quiz.timeLimit} seconds
         </Typography>
@@ -58,23 +88,7 @@ export const QuizBox = ({ quiz }: { quiz: Quiz }) => {
         </Typography>
       </CardContent>
       <CardOverflow sx={{ bgcolor: "background.level1" }}>
-        <CardActions id="quiz-box-btn">
-          <ButtonGroup variant="outlined">
-            <Button
-              onClick={() => navigate(`/play/${quiz.id!}`)}
-              variant="solid"
-              color="success"
-              disabled={canModify}
-              aria-label={`Play ${quiz.question}`}
-            >
-              Play Now!
-            </Button>
-          </ButtonGroup>
-          <ButtonGroup variant="outlined">
-            <EditQuiz canModify={canModify} quizToEdit={quiz} />
-            <DeleteQuiz canModify={canModify} quizToDelete={quiz} />
-          </ButtonGroup>
-        </CardActions>
+        <CardActions id="quiz-box-btn">{buttonDisplays}</CardActions>
       </CardOverflow>
     </Card>
   );

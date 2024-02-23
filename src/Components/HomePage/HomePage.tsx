@@ -6,19 +6,35 @@ import { QuizBox } from "../Quiz/QuizBox";
 import { Leaderboard } from "../LeaderBoard/LeaderBoard";
 import { useQuizUserInfoContext } from "../../providers/quiz-user-info-provider";
 import { UserInstructions } from "../UserInstructions/UserInstructions";
+import { FilterAndSearch } from "./FilterAndSearch";
 
 export const HomePage = () => {
-  const { playableQuizzes, myQuizzes, quizzesLoading, quizzesLoadingError } = useQuizContext();
+  const {
+    filteredPlayableQuizzes,
+    playableQuizzes,
+    myQuizzes,
+    quizzesLoading,
+    quizzesLoadingError,
+    appliedFilters,
+  } = useQuizContext();
   const { selectedIndex } = useQuizUserInfoContext();
 
-  const showPlayableQuizzes = (
+  const showAllQuizzes =
+    appliedFilters.category === "All" &&
+    appliedFilters.matchingSubstring === "";
+
+  const quizzesOnMainPage = (
     <div className="quiz-box">
       {quizzesLoading && <div>Loading With Spin</div>}
       {quizzesLoadingError && <div>Error</div>}
-      {playableQuizzes &&
-        playableQuizzes.map((quiz) => {
-          return <QuizBox quiz={quiz} key={quiz.id} />;
-        })}
+      {showAllQuizzes
+        ? playableQuizzes &&
+          playableQuizzes.map((quiz) => {
+            return <QuizBox quiz={quiz} key={quiz.id} />;
+          })
+        : filteredPlayableQuizzes.map((quiz) => {
+            return <QuizBox quiz={quiz} key={quiz.id} />;
+          })}
     </div>
   );
 
@@ -47,7 +63,12 @@ export const HomePage = () => {
       <div className="home-page-options">
         <HomePageOptions />
       </div>
-      {selectedIndex === 0 && showPlayableQuizzes}
+      {selectedIndex === 0 && (
+        <div>
+          <FilterAndSearch />
+          {quizzesOnMainPage}
+        </div>
+      )}
       {selectedIndex === 1 && newQuiz}
       {selectedIndex === 2 && <Leaderboard />}
       {selectedIndex === 3 && <UserInstructions />}

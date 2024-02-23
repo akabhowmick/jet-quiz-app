@@ -19,6 +19,7 @@ export interface Quiz {
   quizAuthorId: string;
   quizAuthorName: string;
   quizAuthorImage: string;
+  quizTags: string[];
 }
 
 export interface UserSignIn {
@@ -30,4 +31,9 @@ export interface UserDataFromSupabase {
   user: User | null;
   session: Session | null;
   weakPassword?: WeakPassword | undefined;
+}
+
+export interface QuizFilter {
+  category: string;
+  matchingSubstring: string; 
 }

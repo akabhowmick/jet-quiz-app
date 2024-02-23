@@ -17,8 +17,10 @@ export const priceErrorMessage = "Enter a price range";
 export const userTypeErrorMessage = "Choose a user type";
 export const phoneNumberErrorMessage = "Enter a valid phone number";
 export const emptyAnswerErrorMessage = "Enter an answer";
-export const usernameErrorMessage = "Enter a username that is 7 characters, and only letters, numbers";
-export const avatarIconErrorMessage = "Pick an avatar icon"
+export const usernameErrorMessage =
+  "Enter a username that is 7 characters, and only letters, numbers";
+export const avatarIconErrorMessage = "Pick an avatar icon";
+export const quizTagErrorMessage = "Choose a tag for the quiz";
 
 export const swalNumberErrorMessage = {
   title: "Error!",

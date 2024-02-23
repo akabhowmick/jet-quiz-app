@@ -70,3 +70,16 @@
   max-height: 45vh;
   overflow-y: auto;
 }
+
+.filters{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-bar-container label{
+  color: black;
+  margin: 0 10px 0 0;
+  padding: 0;
+}

@@ -29,5 +29,9 @@ export const isValidUserName = (userName: string) => {
 };
 
 export const isValidAvatar = (pathToImage: string) => {
-  return pathToImage.length > 0 && pathToImage; 
-}
+  return pathToImage.length > 0 && pathToImage;
+};
+
+export const isValidQuizTag = (tagsArray: string[]) => {
+  return tagsArray.length > 0;
+};

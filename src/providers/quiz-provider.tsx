@@ -13,11 +13,12 @@ import {
 } from "../api/QuizRequests/GetQuizRequest";
 import { editQuizzesToDB } from "../api/QuizRequests/PatchQuizRequest";
 import { addQuizzesToDB } from "../api/QuizRequests/PostQuizRequest";
-import { Quiz } from "../types/interfaces";
+import { Quiz, QuizFilter } from "../types/interfaces";
 import swal from "sweetalert";
 
 interface QuizContextType {
   playableQuizzes: Quiz[];
+  filteredPlayableQuizzes: Quiz[];
   myQuizzes: Quiz[];
   currentQuiz: Quiz | undefined;
   addQuiz: (newQuiz: Quiz) => Promise<void>;
@@ -26,9 +27,13 @@ interface QuizContextType {
   getSingleQuizInfo: (quizId: number) => void;
   gameEndPointCalculator: (userPoints: number) => number;
   setPlayableQuizzes: React.Dispatch<React.SetStateAction<Quiz[]>>;
+  setFilteredPlayableQuizzes: React.Dispatch<React.SetStateAction<Quiz[]>>;
   setMyQuizzes: React.Dispatch<React.SetStateAction<Quiz[]>>;
   quizzesLoading: boolean;
   quizzesLoadingError: boolean;
+  handleQuizFilters: (filterType: string, filterValue: string) => void;
+  tags: string[];
+  appliedFilters: QuizFilter;
 }
 
 const QuizContext = createContext<QuizContextType>({} as QuizContextType);
@@ -41,10 +46,26 @@ export const QuizProvider = ({
   children: ReactNode;
 }) => {
   const [playableQuizzes, setPlayableQuizzes] = useState<Quiz[]>([]);
+  const [filteredPlayableQuizzes, setFilteredPlayableQuizzes] = useState<
+    Quiz[]
+  >([]);
   const [myQuizzes, setMyQuizzes] = useState<Quiz[]>([]);
   const [quizzesLoading, setQuizzesLoading] = useState(true);
   const [quizzesLoadingError, setQuizzesLoadingError] = useState(false);
   const [currentQuiz, setCurrentQuiz] = useState<Quiz>();
+  const [appliedFilters, setAppliedFilters] = useState<QuizFilter>({
+    category: "All",
+    matchingSubstring: "",
+  });
+  const tags = [
+    "All",
+    "Random",
+    "Geography",
+    "Math",
+    "History",
+    "Sports",
+    "Science",
+  ];
 
   const gameEndPointCalculator = (userPoints: number) => {
     const quizAnswersLength = currentQuiz!.answersArray.length;
@@ -52,7 +73,6 @@ export const QuizProvider = ({
     return roundedPoints;
   };
 
-  // * here we can go ahead and use the loading and error states
   const refetchQuizzes = async () => {
     const { data, error } = await getQuizzesFromDB();
     if (error) {
@@ -66,6 +86,51 @@ export const QuizProvider = ({
       setMyQuizzes(data.filter((quiz: Quiz) => quiz.quizAuthorId === user?.id));
     }
     setQuizzesLoading(false);
+  };
+
+  const filterByCategory = (category: string) => {
+    let filteredQuizzes;
+    if (category !== "All") {
+      filteredQuizzes = playableQuizzes.filter((quiz) =>
+        quiz.quizTags?.includes(category)
+      );
+    } else {
+      filteredQuizzes = playableQuizzes;
+    }
+    setFilteredPlayableQuizzes(filteredQuizzes);
+  };
+
+  const filterBySearch = (substring: string) => {
+    let filteredQuizzes;
+    if (appliedFilters.category === "All") {
+      if (substring !== "") {
+        filteredQuizzes = playableQuizzes.filter((quiz) =>
+          quiz.question.toLowerCase().includes(substring.toLowerCase())
+        );
+      } else {
+        filteredQuizzes = playableQuizzes;
+      }
+    } else {
+      if (substring !== "") {
+        filteredQuizzes = filteredPlayableQuizzes.filter((quiz) =>
+          quiz.question.toLowerCase().includes(substring.toLowerCase())
+        );
+      } else {
+        filteredQuizzes = filteredPlayableQuizzes;
+      }
+    }
+
+    setFilteredPlayableQuizzes(filteredQuizzes);
+  };
+
+  const handleQuizFilters = (filterType: string, filterValue: string) => {
+    if (filterType === "filterSearchInput") {
+      setAppliedFilters({ ...appliedFilters, matchingSubstring: filterValue });
+      filterBySearch(filterValue);
+    } else if (filterType === "filterCategoryInput") {
+      setAppliedFilters({ matchingSubstring: "", category: filterValue });
+      filterByCategory(filterValue);
+    }
   };
 
   useEffect(() => {
@@ -143,9 +208,14 @@ export const QuizProvider = ({
         gameEndPointCalculator,
         deleteQuiz,
         setPlayableQuizzes,
+        setFilteredPlayableQuizzes,
         quizzesLoading,
         quizzesLoadingError,
         setMyQuizzes,
+        tags,
+        filteredPlayableQuizzes,
+        handleQuizFilters,
+        appliedFilters,
       }}
     >
       {children}

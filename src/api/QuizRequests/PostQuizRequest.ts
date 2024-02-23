@@ -10,6 +10,7 @@ export const addQuizzesToDB = async (quiz: Quiz) => {
     quizAuthorId,
     quizAuthorImage,
     quizAuthorName,
+    quizTags,
   } = quiz;
   const { data, error } = await supabase
     .from("Quizzes")
@@ -22,6 +23,7 @@ export const addQuizzesToDB = async (quiz: Quiz) => {
         quizAuthorId,
         quizAuthorImage,
         quizAuthorName,
+        quizTags,
       },
     ])
     .select();
