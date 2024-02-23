@@ -17,7 +17,7 @@ export const FilterAndSearch = () => {
           variant="standard"
         />
       </div>
-      <div>
+      <div className="category-container">
         <label htmlFor="quiz-category-filter">Select Quiz Category: </label>
         <NativeSelect
           onChange={(e) =>
