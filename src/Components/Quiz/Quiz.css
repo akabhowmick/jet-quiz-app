@@ -34,10 +34,15 @@ ul > input {
   background: lightgrey;
 }
 
+.quiz-card-container{
+  width: 100%;
+}
 
-#quiz-box-btn{display: flex;
+#quiz-box-btn {
+  display: flex;
   flex-direction: column;
   align-content: center;
   justify-content: center;
   align-items: center;
-  flex: 1;}
+  flex: 1;
+}

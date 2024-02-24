@@ -24,7 +24,7 @@ export const HomePage = () => {
     appliedFilters.matchingSubstring === "";
 
   const quizzesOnMainPage = (
-    <div className="quiz-box">
+    <div id="playable-quiz-box-container" className="quiz-box">
       {quizzesLoading && <div>Loading With Spin</div>}
       {quizzesLoadingError && <div>Error</div>}
       {showAllQuizzes
@@ -39,7 +39,7 @@ export const HomePage = () => {
   );
 
   const showMyQuizzes = (
-    <div className="quiz-box">
+    <div id="my-quiz-box-container" className="quiz-box">
       {quizzesLoading && <div>Loading With Spin</div>}
       {quizzesLoadingError && <div>Error</div>}
       {myQuizzes &&

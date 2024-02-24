@@ -57,7 +57,7 @@ button:focus {
 body {
   font-family: "Montserrat", sans-serif;
   min-height: 100%;
-  background-image: url("./assets/game-background.png");
+  background-image: url("../assets/game-background.png");
   background-position: bottom;
 }
 

@@ -48,10 +48,10 @@ export const QuizBox = ({ quiz }: { quiz: Quiz }) => {
   return (
     <Card
       data-resizable
+      className="quiz-card-container"
       sx={{
         textAlign: "center",
         alignItems: "center",
-        width: 343,
         overflow: "auto",
         resize: "horizontal",
         "--icon-size": "100px",

@@ -5,7 +5,8 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
-import "./App.css";
+import "./styles/App.css";
+import "./styles/Responsive.css";
 import { HomePage } from "./Components/HomePage/HomePage";
 import { Logout } from "./Components/Logout/Logout";
 import { QuizGame } from "./Components/Quiz/QuizGame";

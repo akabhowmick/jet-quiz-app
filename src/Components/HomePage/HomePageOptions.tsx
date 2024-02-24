@@ -12,9 +12,9 @@ export const HomePageOptions = () => {
 
   return (
     <List
-      className="list-home-options"
+      id="list-home-options"
       orientation="horizontal"
-      aria-label="Example application menu bar"
+      aria-label="Home options menu bar"
       role="menubar"
       data-joy-color-scheme="dark"
       sx={{

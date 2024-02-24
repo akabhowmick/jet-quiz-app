@@ -48,9 +48,6 @@ Contributions are welcome! If you'd like to contribute to the project, please fo
 ## Future Updates:
 1. Responsive on Tablet and Mobile Devices.
 2. Special Features for certain accomplishments. 
-3. Filter functions by tags
-4. Search function by name of quiz
-
 
 
 

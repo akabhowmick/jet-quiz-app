@@ -23,6 +23,7 @@ import {
   isValidQuizQuestion,
   isValidQuizTag,
 } from "../FormElements/FormUtils/validations";
+import swal from "sweetalert";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -159,6 +160,11 @@ export const EnterQuizInfo = ({
     const newQuiz = quizValues();
     if (newQuiz) {
       addQuiz(newQuiz);
+      swal(
+        "Quiz Added!",
+        "You can view, edit, or delete your quiz in the My Quizzes Tab!!",
+        "success"
+      );
       reset();
     }
   };

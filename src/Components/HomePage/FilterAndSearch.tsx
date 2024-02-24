@@ -24,7 +24,6 @@ export const FilterAndSearch = () => {
             handleQuizFilters("filterCategoryInput", e.target.value)
           }
           value={appliedFilters.category}
-          defaultValue={tags[0]}
           inputProps={{
             name: "category",
             id: "quiz-category-filter",
