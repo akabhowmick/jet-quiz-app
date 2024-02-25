@@ -12,7 +12,7 @@ export const Logout = () => {
 
   const onRenderLogOutUser = async () => {
     await logOutUser();
-    setSelectedIndex(0);
+    setSelectedIndex("Playable Quizzes");
     setPlayableQuizzes([]);
     setMyQuizzes([]);
     navigate("/signup");

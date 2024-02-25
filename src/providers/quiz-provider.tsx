@@ -15,11 +15,13 @@ import { editQuizzesToDB } from "../api/QuizRequests/PatchQuizRequest";
 import { addQuizzesToDB } from "../api/QuizRequests/PostQuizRequest";
 import { Quiz, QuizFilter } from "../types/interfaces";
 import swal from "sweetalert";
+import { useQuizUserInfoContext } from "./quiz-user-info-provider";
 
 interface QuizContextType {
   playableQuizzes: Quiz[];
   filteredPlayableQuizzes: Quiz[];
   myQuizzes: Quiz[];
+  savedQuizzes: Quiz[];
   currentQuiz: Quiz | undefined;
   addQuiz: (newQuiz: Quiz) => Promise<void>;
   editQuiz: (quizId: number, quizToEdit: Quiz) => Promise<boolean>;
@@ -45,10 +47,12 @@ export const QuizProvider = ({
   user: User | null;
   children: ReactNode;
 }) => {
+  const { quizUserInfo } = useQuizUserInfoContext();
   const [playableQuizzes, setPlayableQuizzes] = useState<Quiz[]>([]);
   const [filteredPlayableQuizzes, setFilteredPlayableQuizzes] = useState<
     Quiz[]
   >([]);
+  const [savedQuizzes, setSavedQuizzes] = useState<Quiz[]>([]);
   const [myQuizzes, setMyQuizzes] = useState<Quiz[]>([]);
   const [quizzesLoading, setQuizzesLoading] = useState(true);
   const [quizzesLoadingError, setQuizzesLoadingError] = useState(false);
@@ -84,6 +88,11 @@ export const QuizProvider = ({
         data.filter((quiz: Quiz) => quiz.quizAuthorId !== user?.id)
       );
       setMyQuizzes(data.filter((quiz: Quiz) => quiz.quizAuthorId === user?.id));
+      setSavedQuizzes(
+        data.filter((quiz: Quiz) =>
+          quizUserInfo?.saved_quizzes_ids.includes(quiz.id!)
+        )
+      );
     }
     setQuizzesLoading(false);
   };
@@ -136,7 +145,7 @@ export const QuizProvider = ({
   useEffect(() => {
     refetchQuizzes();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
+  }, [user, quizUserInfo]);
 
   const checkAuthorization = (quizToModify: Quiz) => {
     return user!.id === quizToModify.quizAuthorId;
@@ -202,6 +211,7 @@ export const QuizProvider = ({
         myQuizzes,
         addQuiz,
         playableQuizzes,
+        savedQuizzes,
         editQuiz,
         getSingleQuizInfo,
         currentQuiz,

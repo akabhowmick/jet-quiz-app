@@ -16,6 +16,7 @@ export const HomePage = () => {
     quizzesLoading,
     quizzesLoadingError,
     appliedFilters,
+    savedQuizzes,
   } = useQuizContext();
   const { selectedIndex } = useQuizUserInfoContext();
 
@@ -49,12 +50,22 @@ export const HomePage = () => {
     </div>
   );
 
+  const showSavedQuizzes = (
+    <div id="my-quiz-box-container" className="quiz-box">
+      {quizzesLoading && <div>Loading With Spin</div>}
+      {quizzesLoadingError && <div>Error</div>}
+      {myQuizzes &&
+        savedQuizzes.map((quiz) => {
+          return <QuizBox quiz={quiz} key={quiz.id} />;
+        })}
+    </div>
+  );
+
   const newQuiz = (
     <div className="answers-box">
       return <EnterQuizInfo role={"add"} />
     </div>
   );
-
   return (
     <div className="home-page-box">
       <div className="home-page-header">
@@ -63,16 +74,17 @@ export const HomePage = () => {
       <div className="home-page-options">
         <HomePageOptions />
       </div>
-      {selectedIndex === 0 && (
+      {selectedIndex === "Playable Quizzes" && (
         <div>
           <FilterAndSearch />
           {quizzesOnMainPage}
         </div>
       )}
-      {selectedIndex === 1 && newQuiz}
-      {selectedIndex === 2 && <Leaderboard />}
-      {selectedIndex === 3 && <UserInstructions />}
-      {selectedIndex === 4 && showMyQuizzes}
+      {selectedIndex === "Add A New Quiz" && newQuiz}
+      {selectedIndex === "My Quizzes" && showMyQuizzes}
+      {selectedIndex === "Bookmarked Quizzes" && showSavedQuizzes}
+      {selectedIndex === "View Leaderboard" && <Leaderboard />}
+      {selectedIndex === "User Instructions" && <UserInstructions />}
     </div>
   );
 };

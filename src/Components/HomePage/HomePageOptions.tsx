@@ -6,8 +6,8 @@ import ListItemButton from "@mui/joy/ListItemButton";
 export const HomePageOptions = () => {
   const { setSelectedIndex, homePageDisplayOptions } = useQuizUserInfoContext();
 
-  const handleListItemClick = (index: number) => {
-    setSelectedIndex(index);
+  const handleListItemClick = (option: string) => {
+    setSelectedIndex(option);
   };
 
   return (
@@ -25,9 +25,9 @@ export const HomePageOptions = () => {
         margin: "0 auto",
       }}
     >
-      {homePageDisplayOptions.map((option, index) => (
-        <ListItem key={index}>
-          <ListItemButton onClick={() => handleListItemClick(index)}>
+      {homePageDisplayOptions.map((option) => (
+        <ListItem key={option}>
+          <ListItemButton onClick={() => handleListItemClick(option)}>
             {option}
           </ListItemButton>
         </ListItem>

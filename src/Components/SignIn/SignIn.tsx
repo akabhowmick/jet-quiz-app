@@ -85,6 +85,7 @@ export const SignIn = () => {
             userName: userNameInput,
             user_id: newUserId!,
             user_image: selectedAvatar,
+            saved_quizzes_ids: [],
           };
           addQuizUserInfo(newUser);
         }

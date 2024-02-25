@@ -8,6 +8,7 @@ export interface QuizUsersInfo {
   overallRanking: number;
   user_id: string;
   user_image: string;
+  saved_quizzes_ids: number[];
 }
 
 export interface Quiz {
@@ -35,5 +36,5 @@ export interface UserDataFromSupabase {
 
 export interface QuizFilter {
   category: string;
-  matchingSubstring: string; 
+  matchingSubstring: string;
 }

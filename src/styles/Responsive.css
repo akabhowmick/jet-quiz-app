@@ -10,16 +10,9 @@
     font-size: 1.25rem;
     margin: 4px;
   }
-  #list-home-options {
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-  }
-
   .filters {
     flex-wrap: wrap;
   }
-
   #playable-quiz-box-container,
   #my-quiz-box-container {
     margin: 1rem;
@@ -30,11 +23,7 @@
 }
 
 /* tablets  */
-@media only screen and (max-width: 768px) and (min-width: 576px) {
-  #list-home-options {
-    font-size: 0.8rem;
-  }
-
+@media only screen and (max-width: 768px) and (min-width: 577px) {
   #playable-quiz-box-container,
   #my-quiz-box-container {
     margin: 20px;
@@ -43,10 +32,13 @@
     grid-template-columns: 1fr 1fr;
     grid-gap: 1rem;
   }
-
   .form-question-inputs {
     margin-top: 7rem;
   }
+}
+
+/* laptop screens */
+@media only screen and (max-width: 1399px) and (min-width: 768px) {
 }
 
 /* large desktops */

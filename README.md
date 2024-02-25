@@ -46,9 +46,11 @@ Contributions are welcome! If you'd like to contribute to the project, please fo
 5. Submit a pull request.
 
 ## Future Updates:
-1. Responsive on Tablet and Mobile Devices.
-2. Special Features for certain accomplishments. 
-
+1. Special Features for certain accomplishments. 
+2. Add features saying you made successful changes 
+3. For answers accept options 
+4. Fix the link info for the api 
+5. Allow for user States: loading, auth, unauthenticated
 
 
 

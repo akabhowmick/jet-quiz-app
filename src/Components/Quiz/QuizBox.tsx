@@ -14,26 +14,44 @@ import { Quiz } from "../../types/interfaces";
 import { EditQuiz } from "./EditQuiz";
 import { DeleteQuiz } from "./DeleteQuiz";
 import { useAuthContext } from "../../providers/auth-provider";
+import { useQuizUserInfoContext } from "../../providers/quiz-user-info-provider";
 
 export const QuizBox = ({ quiz }: { quiz: Quiz }) => {
   const navigate = useNavigate();
   const { user } = useAuthContext();
+  const { toggleSavedQuizzes, quizUserInfo } = useQuizUserInfoContext();
 
   const canModify = user?.id === quiz.quizAuthorId;
   // if the id of the user is the same as the quiz, then they can edit and delete it but not play it
+
+  const toggleFavorite = () => {
+    toggleSavedQuizzes(quiz.id!);
+  };
 
   const buttonDisplays = (
     <>
       <ButtonGroup variant="outlined">
         {!canModify && (
-          <Button
-            onClick={() => navigate(`/play/${quiz.id!}`)}
-            variant="solid"
-            color="success"
-            aria-label={`Play ${quiz.question}`}
-          >
-            Play Now!
-          </Button>
+          <ButtonGroup>
+            <Button
+              onClick={() => navigate(`/play/${quiz.id!}`)}
+              variant="solid"
+              color="success"
+              aria-label={`Play ${quiz.question}`}
+            >
+              Play Now!
+            </Button>
+            <Button
+              onClick={toggleFavorite}
+              variant="solid"
+              color="neutral"
+              aria-label={`Toggle favorites for ${quiz.question}`}
+            >
+              {quizUserInfo!.saved_quizzes_ids.includes(quiz.id!)
+                ? "Remove!"
+                : "Save!"}
+            </Button>
+          </ButtonGroup>
         )}
       </ButtonGroup>
       {canModify && (
@@ -44,7 +62,6 @@ export const QuizBox = ({ quiz }: { quiz: Quiz }) => {
       )}
     </>
   );
-
   return (
     <Card
       data-resizable

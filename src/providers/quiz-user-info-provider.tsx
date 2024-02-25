@@ -13,14 +13,15 @@ import { addUserToDB } from "../api/QuizUsersRequests/PostQuizUserInfo";
 import { QuizUsersInfo } from "../types/interfaces";
 
 interface QuizUserInfoContextType {
-  selectedIndex: number;
-  setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
+  selectedIndex: string;
+  setSelectedIndex: React.Dispatch<React.SetStateAction<string>>;
   quizUserInfo: QuizUsersInfo | null;
   setQuizUserInfo: React.Dispatch<React.SetStateAction<QuizUsersInfo | null>>;
   leaderBoardUsers: QuizUsersInfo[];
   addQuizUserInfo: (user: QuizUsersInfo) => Promise<void>;
   editQuizUserInfo: (score: number, setToZero?: number) => Promise<void>;
   updateCurrentUserRank: (updatedUsers: QuizUsersInfo[]) => Promise<number>;
+  toggleSavedQuizzes: (quizId: number) => void;
   homePageDisplayOptions: string[];
   leaderBoardUsersLoadingError: boolean;
   leaderBoardUsersLoading: boolean;
@@ -38,17 +39,18 @@ export const QuizUserInfoProvider = ({
   children: ReactNode;
 }) => {
   const [quizUserInfo, setQuizUserInfo] = useState<QuizUsersInfo | null>(null);
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState("Playable Quizzes");
   const [leaderBoardUsers, setLeaderBoardUsers] = useState<QuizUsersInfo[]>([]);
   const [leaderBoardUsersLoading, setLeaderBoardUsersLoading] = useState(true);
   const [leaderBoardUsersLoadingError, setLeaderBoardUsersLoadingError] =
     useState(false);
   const homePageDisplayOptions = [
-    "Show Playable Quizzes",
+    "Playable Quizzes",
+    "My Quizzes",
+    "Bookmarked Quizzes",
     "Add A New Quiz",
-    "See Leader Board",
+    "View Leaderboard",
     "User Instructions",
-    "Show My Quizzes",
   ];
 
   const fetchLeaderBoardData = async () => {
@@ -88,7 +90,7 @@ export const QuizUserInfoProvider = ({
   }, [getQuizUserInfoOnFirstLoad]);
 
   useEffect(() => {
-    if (selectedIndex === 2) {
+    if (selectedIndex === "View Leaderboard") {
       fetchLeaderBoardData();
     } else {
       setLeaderBoardUsers([]);
@@ -122,6 +124,25 @@ export const QuizUserInfoProvider = ({
       overallRanking: newOverallRanking,
     };
     setQuizUserInfo(editedUser);
+    const editedUserData = await updateQuizUserInfoInDB(editedUser);
+    if (editedUserData) {
+      setQuizUserInfo(editedUserData[0]);
+    }
+  };
+
+  const toggleSavedQuizzes = async (quizId: number) => {
+    let userSavedQuizArray = quizUserInfo?.saved_quizzes_ids;
+    if (!quizUserInfo?.saved_quizzes_ids.includes(quizId)) {
+      userSavedQuizArray?.push(quizId);
+    } else {
+      userSavedQuizArray = userSavedQuizArray?.filter(
+        (savedQuiz) => savedQuiz !== quizId
+      );
+    }
+    const editedUser: QuizUsersInfo = {
+      ...quizUserInfo!,
+      saved_quizzes_ids: userSavedQuizArray!,
+    };
     const editedUserData = await updateQuizUserInfoInDB(editedUser);
     if (editedUserData) {
       setQuizUserInfo(editedUserData[0]);
@@ -165,6 +186,7 @@ export const QuizUserInfoProvider = ({
         addQuizUserInfo,
         editQuizUserInfo,
         homePageDisplayOptions,
+        toggleSavedQuizzes,
         leaderBoardUsersLoadingError,
         leaderBoardUsersLoading,
         updateCurrentUserRank,
@@ -177,7 +199,3 @@ export const QuizUserInfoProvider = ({
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const useQuizUserInfoContext = () => useContext(QuizUserInfoContext);
-
-// second we calculate the rank
-// third we set the currentUser to that new version we made
-// last we sett the currentUser to the fetch user info
