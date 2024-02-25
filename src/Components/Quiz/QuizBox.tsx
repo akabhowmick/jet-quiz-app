@@ -47,7 +47,7 @@ export const QuizBox = ({ quiz }: { quiz: Quiz }) => {
               color="neutral"
               aria-label={`Toggle favorites for ${quiz.question}`}
             >
-              {quizUserInfo!.saved_quizzes_ids.includes(quiz.id!)
+              {quizUserInfo?.saved_quizzes_ids.includes(quiz.id!)
                 ? "Remove!"
                 : "Save!"}
             </Button>
