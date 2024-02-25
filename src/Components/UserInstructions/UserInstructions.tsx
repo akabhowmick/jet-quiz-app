@@ -27,7 +27,7 @@ export const UserInstructions = () => {
   ];
 
   return (
-    <div>
+    <div className="user-instructions-table">
       <Typography variant="h4" gutterBottom>
         User Instructions
       </Typography>

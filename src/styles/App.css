@@ -188,3 +188,8 @@ nav {
   align-items: center;
   margin: 1rem 0;
 }
+
+.leaderboard-table,
+.user-instructions-table {
+  margin: 20px;
+}

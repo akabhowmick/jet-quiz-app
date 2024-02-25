@@ -163,6 +163,7 @@ export const QuizProvider = ({
       const { data, error } = await editQuizzesToDB(quizId, quizToEdit);
       if (data) {
         refetchQuizzes();
+        swal("Editing Success!", "Your quiz was edited!", "success");
         return true;
       }
       if (error) {
@@ -170,11 +171,6 @@ export const QuizProvider = ({
       }
       return false;
     }
-    swal(
-      "Editing Error!",
-      "Invalid: You are not the maker of this quiz!!",
-      "error"
-    );
     return false;
   };
 
@@ -189,6 +185,7 @@ export const QuizProvider = ({
     if (checkAuthorization(quizToDelete)) {
       const deletedQuizError = await deleteQuizFromDb(quizId);
       if (!deletedQuizError) {
+        swal("Editing Success!", "Your quiz was deleted!", "success");
         await refetchQuizzes();
       } else {
         swal(
@@ -198,11 +195,6 @@ export const QuizProvider = ({
         );
       }
     }
-    swal(
-      "Delete Error!",
-      "Invalid: You are not the maker of this quiz!!",
-      "error"
-    );
   };
 
   return (

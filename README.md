@@ -52,6 +52,6 @@ Contributions are welcome! If you'd like to contribute to the project, please fo
 ## Future Updates:
 
 1. Special Features for certain accomplishments.
-2. Add features saying you made successful changes
-3. For answers accept multiple valid options
-4. Allow for user States: loading, auth, unauthenticated
+2. For answers accept multiple valid options
+3. Allow for user States: loading, auth, unauthenticated
+4. Fix API keys  

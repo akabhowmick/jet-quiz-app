@@ -4,7 +4,8 @@ import ListItem from "@mui/joy/ListItem";
 import ListItemButton from "@mui/joy/ListItemButton";
 
 export const HomePageOptions = () => {
-  const { setSelectedIndex, homePageDisplayOptions } = useQuizUserInfoContext();
+  const { selectedIndex, setSelectedIndex, homePageDisplayOptions } =
+    useQuizUserInfoContext();
 
   const handleListItemClick = (option: string) => {
     setSelectedIndex(option);
@@ -26,7 +27,7 @@ export const HomePageOptions = () => {
       }}
     >
       {homePageDisplayOptions.map((option) => (
-        <ListItem key={option}>
+        <ListItem key={option} id={selectedIndex === option ? "active-tab" : ""}>
           <ListItemButton onClick={() => handleListItemClick(option)}>
             {option}
           </ListItemButton>

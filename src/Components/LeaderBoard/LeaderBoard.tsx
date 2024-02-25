@@ -31,7 +31,7 @@ export const Leaderboard = () => {
   );
 
   return (
-    <div>
+    <div className="leaderboard-table">
       <Typography variant="h4" gutterBottom>
         Game Leaderboard
       </Typography>

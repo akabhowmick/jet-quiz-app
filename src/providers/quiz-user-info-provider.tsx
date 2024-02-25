@@ -11,6 +11,7 @@ import { getQuizUsersInfoFromDB } from "../api/QuizUsersRequests/GetQuizUserInfo
 import { updateQuizUserInfoInDB } from "../api/QuizUsersRequests/PatchQuizUserInfo";
 import { addUserToDB } from "../api/QuizUsersRequests/PostQuizUserInfo";
 import { QuizUsersInfo } from "../types/interfaces";
+import swal from "sweetalert";
 
 interface QuizUserInfoContextType {
   selectedIndex: string;
@@ -134,9 +135,19 @@ export const QuizUserInfoProvider = ({
     let userSavedQuizArray = quizUserInfo?.saved_quizzes_ids;
     if (!quizUserInfo?.saved_quizzes_ids.includes(quizId)) {
       userSavedQuizArray?.push(quizId);
+      swal(
+        "Saved to Bookmarked Quizzes!",
+        "You can now easily view and play this quiz anytime",
+        "success"
+      );
     } else {
       userSavedQuizArray = userSavedQuizArray?.filter(
         (savedQuiz) => savedQuiz !== quizId
+      );
+      swal(
+        "Removed from Bookmarked Quizzes!",
+        "You won't see this quiz anymore",
+        "success"
       );
     }
     const editedUser: QuizUsersInfo = {

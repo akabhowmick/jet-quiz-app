@@ -173,7 +173,7 @@ export const EnterQuizInfo = ({
     <form className="add-quiz-box" onSubmit={handleSubmit}>
       <div className="form-question-inputs">
         <TextFieldWithValidation
-          label="Enter Quiz Prompt Here:"
+          label="Enter Quiz Prompt Here"
           inputProps={{
             placeholder: "Name all the countries in the world...",
             value: questionInput,
@@ -186,7 +186,7 @@ export const EnterQuizInfo = ({
           shouldDisplayError={!isQuestionInputValid && isSubmitted}
         />
         <TextFieldWithValidation
-          label="Number of Answers:"
+          label="Number of Answers"
           inputProps={{
             value: numOfAnswers,
             type: "number",
@@ -198,7 +198,7 @@ export const EnterQuizInfo = ({
           shouldDisplayError={!isNumOfAnswersValid && isSubmitted}
         />
         <TextFieldWithValidation
-          label="Time Limit (in seconds):"
+          label="Time Limit (in seconds)"
           inputProps={{
             value: timeInput,
             type: "number",
@@ -251,7 +251,7 @@ export const EnterQuizInfo = ({
         {answersArrayInput.map((_, index) => (
           <div key={index}>
             <TextFieldWithValidation
-              label={`Answer ${index + 1}:`}
+              label={`Answer ${index + 1}`}
               inputProps={{
                 placeholder: "Dummy answer",
                 value: answersArrayInput[index] || "",
