@@ -19,6 +19,8 @@ interface AuthContextType {
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
   loggedIn: boolean;
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+
+  userLoading: boolean;
   signUpUser: (user: UserSignIn) => Promise<string | undefined>;
   signInUser: (user: UserSignIn) => Promise<boolean>;
   editUserLogin: (password: string) => Promise<void>;
@@ -29,6 +31,7 @@ const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [userLoading, setUserLoading] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
 
   const setLocalStorage = (user: User) => {
@@ -43,8 +46,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const {
       data: { user },
     } = await supabase.auth.getUser();
-    setUser(user);
-    setLoggedIn(true);
+    if (user) {
+      setUser(user);
+      setLoggedIn(true);
+    }
+    setUserLoading(false);
   };
 
   const logOutUser = async () => {
@@ -55,7 +61,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       localStorage.removeItem("user");
     }
   };
-  
+
   useEffect(() => {
     checkUserSession();
   }, []);
@@ -104,6 +110,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       value={{
         user,
         setUser,
+        userLoading,
         loggedIn,
         setLoggedIn,
         signUpUser,
@@ -119,4 +126,3 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const useAuthContext = () => useContext(AuthContext);
-

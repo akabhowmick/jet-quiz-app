@@ -16,16 +16,17 @@ import RootLayout from "./layouts/RootLayout";
 import { useAuthContext } from "./providers/auth-provider";
 import { QuizProvider } from "./providers/quiz-provider";
 import { QuizUserInfoProvider } from "./providers/quiz-user-info-provider";
+import { NotFound } from "./Components/NotFound/NotFound";
 
 function App() {
-  const { user } = useAuthContext();
+  const { user, userLoading } = useAuthContext();
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<RootLayout />}>
         <Route
           index
           loader={() => {
-            if (!user) return redirect("/signup");
+            if (!user && !userLoading) return redirect("/signup");
             return null;
           }}
           element={<HomePage />}
@@ -34,13 +35,14 @@ function App() {
         <Route
           path="profile"
           loader={() => {
-            if (!user) return redirect("/signup");
+            if (!user && !userLoading) return redirect("/signup");
             return null;
           }}
           element={<ProfilePage />}
         />
         <Route path="logout" element={<Logout />} />
         <Route path="/play/:quizId" element={<QuizGame />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     )
   );

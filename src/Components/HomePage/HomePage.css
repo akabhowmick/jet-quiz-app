@@ -73,10 +73,13 @@
 
 .filters {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   margin: 1rem;
+  padding: 0.25rem;
+  color: black;
 }
 
 .filters label {
@@ -102,7 +105,6 @@
   justify-content: center;
 }
 
-
-#active-tab{
-  background-color: aqua;
+#active-tab {
+  background-color: #f0f4f8;
 }
