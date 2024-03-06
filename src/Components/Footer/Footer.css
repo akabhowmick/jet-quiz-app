@@ -1,0 +1,10 @@
+.footer-credits {
+  padding: 1rem;
+  background-color: aliceblue;
+  color: black;
+}
+
+.footer-credits a {
+  color: crimson;
+  text-decoration: underline;
+}

@@ -17,6 +17,7 @@ import { useAuthContext } from "./providers/auth-provider";
 import { QuizProvider } from "./providers/quiz-provider";
 import { QuizUserInfoProvider } from "./providers/quiz-user-info-provider";
 import { NotFound } from "./Components/NotFound/NotFound";
+import { Footer } from "./Components/Footer/Footer";
 
 function App() {
   const { user, userLoading } = useAuthContext();
@@ -52,6 +53,7 @@ function App() {
         <div className="main-div">
           <RouterProvider router={router} />
         </div>
+        <Footer/>
       </QuizProvider>
     </QuizUserInfoProvider>
   );
