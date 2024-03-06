@@ -53,5 +53,7 @@ Contributions are welcome! If you'd like to contribute to the project, please fo
 
 1. Special Features for certain accomplishments.
 2. For answers accept multiple valid options
-3. Allow for user States: loading, auth, unauthenticated
+3. For mobile view redo the sign/login page
 4. Fix API keys  
+5. Add options for tags that gives a visual display on the card body
+6. Reduce console.log for errors 

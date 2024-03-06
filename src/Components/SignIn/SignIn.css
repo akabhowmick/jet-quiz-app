@@ -147,3 +147,12 @@
   border: 2px solid transparent;
   cursor: pointer;
 }
+
+@media only screen and (max-width: 37.5em) {
+  .animal-icons-grid {
+    grid-template-columns: auto auto;
+  }
+  .sign-up-avatar-container{
+    flex-direction: column;
+  }
+}

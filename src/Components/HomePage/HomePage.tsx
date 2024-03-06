@@ -7,6 +7,7 @@ import { Leaderboard } from "../LeaderBoard/LeaderBoard";
 import { useQuizUserInfoContext } from "../../providers/quiz-user-info-provider";
 import { UserInstructions } from "../UserInstructions/UserInstructions";
 import { FilterAndSearch } from "./FilterAndSearch";
+import { loadingCard } from "../Loaders/Loaders";
 
 export const HomePage = () => {
   const {
@@ -21,12 +22,24 @@ export const HomePage = () => {
   const { selectedIndex } = useQuizUserInfoContext();
 
   const showAllQuizzes =
-    appliedFilters.category === "All" &&
-    appliedFilters.matchingSubstring === "";
+    appliedFilters.category === "All" && appliedFilters.matchingSubstring === "";
+
+  const loadingOrErrors = (
+    <>
+      {quizzesLoading && (
+        <>
+          {loadingCard}
+          {loadingCard}
+          {loadingCard}
+        </>
+      )}
+      {quizzesLoadingError && <div>Error</div>}
+    </>
+  );
 
   const quizzesOnMainPage = (
     <div id="playable-quiz-box-container" className="quiz-box">
-      {quizzesLoading && <div>Loading With Spin</div>}
+      {loadingOrErrors}
       {quizzesLoadingError && <div>Error</div>}
       {showAllQuizzes
         ? playableQuizzes &&
@@ -41,7 +54,7 @@ export const HomePage = () => {
 
   const showMyQuizzes = (
     <div id="my-quiz-box-container" className="quiz-box">
-      {quizzesLoading && <div>Loading With Spin</div>}
+      {loadingOrErrors}
       {quizzesLoadingError && <div>Error</div>}
       {myQuizzes &&
         myQuizzes.map((quiz) => {
@@ -52,7 +65,7 @@ export const HomePage = () => {
 
   const showSavedQuizzes = (
     <div id="my-quiz-box-container" className="quiz-box">
-      {quizzesLoading && <div>Loading With Spin</div>}
+      {loadingOrErrors}
       {quizzesLoadingError && <div>Error</div>}
       {myQuizzes &&
         savedQuizzes.map((quiz) => {

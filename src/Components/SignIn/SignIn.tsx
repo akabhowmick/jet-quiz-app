@@ -235,3 +235,6 @@ export const SignIn = () => {
     </div>
   );
 };
+
+
+// for mobile view display a different return

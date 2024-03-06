@@ -9,7 +9,7 @@ import {
   Paper,
 } from "@mui/material";
 import { useQuizUserInfoContext } from "../../providers/quiz-user-info-provider";
-import { ThreeCircles } from "react-loader-spinner";
+import { loadingSpinners } from "../Loaders/Loaders";
 
 export const Leaderboard = () => {
   const {
@@ -17,18 +17,6 @@ export const Leaderboard = () => {
     leaderBoardUsersLoading,
     leaderBoardUsersLoadingError,
   } = useQuizUserInfoContext();
-
-  const loading = (
-    <ThreeCircles
-      visible={true}
-      height="50"
-      width="50"
-      color="#4fa94d"
-      ariaLabel="three-circles-loading"
-      wrapperStyle={{}}
-      wrapperClass=""
-    />
-  );
 
   return (
     <div className="leaderboard-table">
@@ -47,9 +35,9 @@ export const Leaderboard = () => {
           {leaderBoardUsersLoading && (
             <TableBody>
               <TableRow key="loading">
-                <TableCell>{loading}</TableCell>
-                <TableCell>{loading}</TableCell>
-                <TableCell>{loading}</TableCell>
+                <TableCell>{loadingSpinners}</TableCell>
+                <TableCell>{loadingSpinners}</TableCell>
+                <TableCell>{loadingSpinners}</TableCell>
               </TableRow>
             </TableBody>
           )}
